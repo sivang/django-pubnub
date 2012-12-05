@@ -1,0 +1,5 @@
+hg+https://bitbucket.org/wkornewald/django-nonrel
+hg+https://bitbucket.org/wkornewald/djangotoolbox
+git+https://github.com/django-nonrel/mongodb-engine
+git+https://github.com/ryanmark/django_facebook_oauth
+lxml
