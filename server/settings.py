@@ -1,7 +1,9 @@
-# Django settings for server project.
+# Django settings for backend project.
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+SITE_ID=u'50c45e31da907a1d2f482246'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -9,14 +11,16 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    'default': 
+    {
+        'ENGINE': 'django_mongodb_engine',
+        'NAME': 'heroku_app9897018',                      # Or path to database file if using sqlite3.
+        'USER': 'heroku_app9897018',                      # Not used with sqlite3.
+        'PASSWORD': 'u2u4165m4o62l3ocrbda2d0mk2',                  # Not used with sqlite3.
+        'HOST': 'ds045157.mongolab.com',
+        'PORT': 45157,            
     }
 }
 
@@ -33,7 +37,6 @@ TIME_ZONE = 'America/Chicago'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
 
-SITE_ID = 1
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -115,10 +118,10 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    'djangotoolbox',
+    'django_mongodb_engine',
 )
 
 # A sample logging configuration. The only tangible logging
