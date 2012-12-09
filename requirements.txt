@@ -9,3 +9,4 @@ django-tastypie
 mimeparse
 python-dateutil
 wsgiref
+pubnub
