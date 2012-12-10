@@ -4,7 +4,7 @@ from production import * # import production settings, hides DATABASES for githu
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-SITE_ID=u'50c45e31da907a1d2f482246'
+SITE_ID=u'50c62049da907a1759a9b729'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
