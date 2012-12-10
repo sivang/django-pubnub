@@ -8,5 +8,5 @@ def index(request):
 
 @login_required
 def detail(request):
-    cuaccount_id = CurrentAccount.objects.get(owner=request.user)
-    return HttpResponse("Balance for current account %s:", curaccount_id, "is: ", CurrentAccount.objects.get(curaccount_id).balance)
+    curaccount = CurrentAccount.objects.get(owner=request.user)
+    return HttpResponse("Balance for your (" + request.user.username + ") account: " + unicode(curaccount.balance))
