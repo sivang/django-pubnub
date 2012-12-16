@@ -15,7 +15,15 @@ def django_login(u, p , req):
         return True
     else:
         return False
-        
+       
+
+class LoginResponse():
+    username = 'username'
+    password = 'password'
+    success = 'false'
+    def __init__(self, pk):
+        self.username = pk
+
 
 class LoginValidation(Validation):
     def is_valid(self, bundle, request=None):
@@ -37,8 +45,8 @@ class LoginResource(Resource):
         fields = ['success', 'username', ]
         always_return_data = True
         resource_name = 'login'
-        authentication = Authentication()
-        authorization = Authorization()
+        authentication = Authentication() # anybody can try login
+        authorization = Authorization() # anybody can try login
         validation = LoginValidation()
     def get_resource_uri(self, bundle_or_obj):
         kwargs = {'resource_name': self._meta.resource_name,}
@@ -46,9 +54,9 @@ class LoginResource(Resource):
             kwargs['api_name'] = self._meta.api_name
         return self._build_reverse_url("api_dispatch_detail", kwargs=kwargs)
     def obj_get(self, request, pk):
-        return LoginResponse(username=pk)
+        return LoginResponse(pk)
     def get_object_list(self, request):
-        results = [LoginResponse()]
+        results = [LoginResponse('username')]
         return results
     def obj_get_list(self, request=None, **kwargs):
         return self.get_object_list(request)
