@@ -8,14 +8,12 @@ from tastypie import fields
 
 from django.contrib.auth import authenticate, login, logout
 
-def django_login(u, p , req):
-    user = authenticate(u, p)
-    if user and user.is_active:
-        login(req, user)
-        return True
-    else:
-        return False
-       
+def tlogin(username, password, request):
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            return True
 
 class LoginResponse():
     username = 'username'
@@ -27,22 +25,23 @@ class LoginResponse():
 
 class LoginValidation(Validation):
     def is_valid(self, bundle, request=None):
-        valid = bundle.data and 'username' in bundle.data and 'password' in bundle.data \
-                and django_login(bundle.data['username'], bundle.data['password'], request)
-        if DEBUG: print valid
-        if valid: 
+        print bundle
+        print bundle.data
+        if not bundle.data:
+            return {'__all__' : 'Bad request'}
+        if 'username' in bundle.data and 'password' in bundle.data and tlogin(bundle.data['username'], bundle.data['password'], request):
             bundle.data['success'] = True
             return {}
         else:
             bundle.data['success'] = False
-            return {"authentication error" : "Bad login."}
+            return {'__all__' : 'Bad login.'}
         
-
+        
 class LoginResource(Resource):
     username = fields.CharField(attribute='username')
     password = fields.CharField(attribute='password')
     class Meta:
-        fields = ['success', 'username', ]
+        fields = ['success', 'username', 'password' ]
         always_return_data = True
         resource_name = 'login'
         authentication = Authentication() # anybody can try login
@@ -58,9 +57,3 @@ class LoginResource(Resource):
     def get_object_list(self, request):
         results = [LoginResponse('username')]
         return results
-    def obj_get_list(self, request=None, **kwargs):
-        return self.get_object_list(request)
-    def obj_create(self, bundle, request=None, **kwargs):
-        return bundle
-    def obj_update(self, bundle, request=None, **kwargs):
-        return self.obj_create(bundle, request, **kwargs)
