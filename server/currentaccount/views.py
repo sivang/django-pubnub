@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from currentaccount.models import CurrentAccount
 from django.contrib.auth.decorators import login_required
-from django.shortcut import render
+from django.shortcuts import render
 
 def index(request):
     return HttpResponse("Welcome to Bank Current Account simulation for PubNub AES encrypted real time notifications.")
