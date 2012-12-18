@@ -59,14 +59,5 @@ class LoginResource(Resource):
         if self._meta.api_name is not None:
             kwargs['api_name'] = self._meta.api_name
         return self._build_reverse_url("api_dispatch_detail", kwargs=kwargs)
-    def obj_get(self, request, pk):
-        return LoginResponse(username=pk)
-    def get_object_list(self, request):
-        results = [LoginResponse()]
-        return results
-    def obj_get_list(self, request=None, **kwargs):
-        return self.get_object_list(request)
     def obj_create(self, bundle, request=None, **kwargs):
         return bundle
-    def obj_update(self, bundle, request=None, **kwargs):
-        return self.obj_create(bundle, request, **kwargs)
