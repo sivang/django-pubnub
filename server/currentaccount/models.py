@@ -10,8 +10,8 @@ class CurrentAccount(models.Model):
     # for a real system this'd better be a pointer to a user account.
     owner = models.ForeignKey(User)
     balance = models.FloatField(default=0)
-    ckey = None
-    notif_channel = None
+    ckey = models.TextField()
+    notif_channel = models.TextField()
 
     def rstring(self):
         return ' '.join([self.pk, self.owner.username, str(self.balance)])
