@@ -7,7 +7,6 @@ import time
 MAX_CHAR_LENGTH = 20
 
 class CurrentAccount(models.Model):
-    # for a real system this'd better be a pointer to a user account.
     owner = models.ForeignKey(User)
     balance = models.FloatField(default=0)
     ckey = models.TextField()
@@ -38,5 +37,6 @@ class CurrentAccount(models.Model):
         print 'ckey:', self.ckey
         print 'notif_channel:',self.notif_channel
         print 'account updated!'
+        return
 
 
