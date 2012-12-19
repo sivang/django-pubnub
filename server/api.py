@@ -12,7 +12,16 @@ from django.contrib.auth import authenticate, login, logout
 class UserResource(ModelResource):
     class Meta:
         queryset = User.objects.all()
-        resource_name = 'auth/user'
-        excludes = ['email', 'password', 'is_superuser']
+        resource_name = 'user'
+        excludes = ['email', 'password', 'is_active', 'is_staff', 'is_superuser']
+        allowed_methods = ['get', ]
+        authentication = BasicAuthentication()
+        authorization = DjangoAuthorization()
+
+class CurrentAccountResource(ModelResource):
+    owner = fields.ForeignKey(UserResource, 'owner')
+    class Meta:
+        queryset = CurrentAccount.objects.all()
+        resource_name = 'account'
         authentication = BasicAuthentication()
         authorization = DjangoAuthorization()
