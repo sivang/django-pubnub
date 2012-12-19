@@ -19,7 +19,7 @@ notifications:
 
 To create an update event for the balance of an account:
 
-$ curl --basic -u "test:957431cbfaa05551a59bb087ad4de5370a9e521c4c455b27ba6b06d5cf4068a3" -v -H "Content-type: application/json" -X PATCH http://localhost:8000/api/v1/account/50d1a999da907a142711dea0/ -d '{"balance" : 2500}'
+$ curl --basic -u "test:957431cbfaa05551a59bb087ad4de5370a9e521c4c455b27ba6b06d5cf4068a3" -v -H "Content-type: application/json" -X PUT http://localhost:8000/api/v1/account/50d1a999da907a142711dea0/ -d '{"balance" : 2500}'
 * About to connect() to localhost port 8000 (#0)
 *   Trying ::1... Connection refused
 *   Trying 127.0.0.1... connected
