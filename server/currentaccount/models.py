@@ -2,7 +2,7 @@ from django.db import models
 from djangotoolbox.fields import ListField
 from django.contrib.auth.models import User
 from hashlib import sha512
-from time import ctime
+import time
 
 MAX_CHAR_LENGTH = 20
 
@@ -21,16 +21,22 @@ class CurrentAccount(models.Model):
 
     def get_notif_channel(self):
         # create the channel based on current ctime and the account's balance
-        self.notif_channel = sha512(''.join(time.ctime(), self.rstring())).hexdigest()
+        self.notif_channel = sha512(''.join([time.ctime(), self.rstring()])).hexdigest()
         # save for usage by publishing mechanism
         self.save()
         return self.notif_channel
 
     def get_ckey(self):
         # this key encrypts data such that pubnub cannot see it.
-        self.ckey = sha512(''.join(time.ctime(), self.username)).hexdigest()
+        self.ckey = sha512(''.join([time.ctime(), self.owner.username])).hexdigest()
         self.save()
         return self.ckey
 
+    def push_cbk(self, sender, **kwargs):
+        # this functions handles sending push notif to 
+        # 3rd party push notification service.
+        print 'ckey:', self.ckey
+        print 'notif_channel:',self.notif_channel
+        print 'account updated!'
 
-# Create your models here.
+
