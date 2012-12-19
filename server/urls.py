@@ -7,7 +7,7 @@ admin.autodiscover()
 
 v1_api = Api(api_name='v1')
 
-v1_api.register(LoginResource())
+v1_api.register(UserResource())
 # v1_api.register(CurrentAccountResource())
 
 urlpatterns = patterns('',
