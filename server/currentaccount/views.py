@@ -14,8 +14,8 @@ def detail(request):
     curaccount = CurrentAccount.objects.get(owner=request.user) # assuming one account per user
     context = {'username' : request.user.username, 
                 'balance' : unicode(curaccount.balance),
-                'notification_channel' : , curaccount.get_notif_channel()
+                'notification_channel' : , curaccount.get_notif_channel(),
                 'subkey' : 'sub-31c9765c-c453-11e1-b76c-1b01c696dab3',
                 'ckey' : curaccount.get_ckey(),
                 }
-    return render(request, 'currentaccount/detail.html')
+    return render(request, 'currentaccount/detail.html', context)
