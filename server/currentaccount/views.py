@@ -34,7 +34,6 @@ def push_cbk(sender, **kwargs):
         print "Account balance: %s" % istance.balance 
         pubnub = Pubnub('pub-ed4e8fc6-b324-426c-8697-ec763129b026',
                             'sub-31c9765c-c453-11e1-b76c-1b01c696dab3',
-                            'sec-NjA1MzNkNTgtM2Y3ZC00NTA1LWFjYTUtNGY1M2ZkNmQzMjI0',
                             True)
         info = pubnub.publish({'channel' : istance.notif_channel,
                                 'message' : 'Current balance ' + unicode(istance.balance)  })
