@@ -30,8 +30,8 @@
 
 <script src="http://cdn.pubnub.com/pubnub-3.4.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="crypto/gibberish-aes.js"></script>
-<script src="crypto/encrypt-pubnub.js"></script>
+<script src="http://raw.github.com/pubnub/pubnub-api/master/javascript/3.4/crypto/gibberish-aes.js"></script>
+<script src="http://raw.github.com/pubnub/pubnub-api/master/javascript/3.4/crypto/encrypt-pubnub.js"></script>
 
 <script>(function(){
 
@@ -40,6 +40,11 @@
     // Checkout http://blog.pubnub.com/wp-content/uploads/2012/07/PubNubACLForPublishAndSubscribeRealTimeSystems-6.png
 
     var cipher_key = "{{ ckey }}";
+
+    /*
+    
+    Commented out since the Python Pubnub API does not seem
+    to support bi-di AES at the moment.
 
     // Create Secure Connection
     var secure_pubnub = PUBNUB.secure({
@@ -51,6 +56,18 @@
     secure_pubnub.subscribe({
         channel    : "{{ notification_channel }}",
         callback   : display_output
+    }); */
+
+    // Non AES pubnub:
+
+    var pubnub = PUBNUB.init({
+        subscribe_key : "{{ subkey }}",
+        ssl : true
+    });
+
+    pubnub.subscribe({
+        channel : "{{ notification_channel }}",
+        callback : display_output
     });
 
      function display_output(message){
