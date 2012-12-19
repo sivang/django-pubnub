@@ -1,60 +1,70 @@
+<head xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<h1>Django real time push updates demo with PubNub</h1>
+
 <style>
-  #chat_box {
-    width: 90%;
-    margin: 10px;
-    padding: 10px;
-    min-height: 300px;
-    background: rgb(232,232,232);
-  }
-  #chat_input {
-    margin: 10px;
-    width: 90%;
-  }
+    #chat_input {
+        margin: 10px;
+        width: 90%;
+    }
+
+    div.scroll {
+        margin: 10px;
+        padding: 10px;
+        height: 200px;
+        width: 800px;
+        overflow: auto;
+        border: 1px solid #666;
+        background: rgb(232,232,232);
+        padding: 8px;
+    }
+
 </style>
 
-<div id='chat_box'></div>
-<form id="chat_form">
-  <input type="text" id='chat_input'/> 
-  <input type="submit" val='send' id='send'/> 
-</form>
+<div class='scroll' id='chat_box'></div>
+
+<button onclick='$("#chat_box").html("")'>Clear All</button>
 
 
+<script src="http://cdn.pubnub.com/pubnub-3.4.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="crypto/gibberish-aes.js"></script>
+<script src="crypto/encrypt-pubnub.js"></script>
 
-<script src="http://cdn.pubnub.com/pubnub-3.1.min.js"></script>
-<script src="http://pubnub.github.com/pubnub-api/crypto/crypto.js"></script>
-<script src="http://pubnub.github.com/pubnub-api/crypto/encrypt-pubnub.js"></script>
+<script>(function(){
 
-<script>
-(function()
-{
+    // Encryption Key
+    // For the optimal way to deliver encryption keys to your PubNub JavaScript app
+    // Checkout http://blog.pubnub.com/wp-content/uploads/2012/07/PubNubACLForPublishAndSubscribeRealTimeSystems-6.png
 
-// Create Secure Connection
-var secure_pubnub = PUBNUB.secure({
-    publish_key   : "{{ publish_key }}",
-    subscribe_key : "{{ subscribe_key }}",
-    origin        : "pubsub.pubnub.com",
-    ssl           : true,
-    cipher_key    : "{{ chipher_key }}"
-});
+    var cipher_key = "{{ ckey }}";
 
-// Secure Connection
-secure_pubnub.subscribe({
-    channel    : "{{ private_update_channel }}", 
-    callback   : function(message) {
-    if (message.name) {
-        PUBNUB.events.fire(message.name, message.data);
-    }
-  }
-});
+    // Create Secure Connection
+    var secure_pubnub = PUBNUB.secure({
+        subscribe_key : "{{ subkey }}",
+        cipher_key    : cipher_key
+    });
 
-    return false;
-});
+    // Secure Connection
+    secure_pubnub.subscribe({
+        channel    : "{{ notification_channel }}",
+        callback   : display_output
+    });
 
-// Update Display (DOM)
-PUBNUB.events.bind('secure_chat_message', function(data) {
-    $('#chat_box').append("<p>" + data.message + "</p>");
-});
+     function display_output(message){
+         time = new Date;
+         h = time.getHours();
+         m = time.getMinutes();
+         s = time.getSeconds();
+         ms = time.getMilliseconds();
+
+         formatted_time = "<span style='color:blue;'>" + h + ":" + m + ":" + s + ":" + ms + "</span>";
+
+         $('#chat_box').append("Received at " + formatted_time + "<br/>" + message + "</p>");
+         $("#chat_box").scrollTop($("#chat_box")[0].scrollHeight);
+     }
 
 })();
- </script>
+</script>
