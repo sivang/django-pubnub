@@ -15,5 +15,9 @@ urlpatterns = patterns('',
     url(r'^current_account/', include('currentaccount.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(v1_api.urls)),
+    url(r'^accounts/login/', 
+        'django.contrib.auth.views.login', 
+        { 'template_name' : 'currentaccount/login.html'} 
+    ),
 )
 
