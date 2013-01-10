@@ -24,13 +24,14 @@ notifications:
 How To Use
 ==========
 
-Point your browser at: `http://django-pubnub.herokuapp.com/current_account/my`
+Point your browser at: http://django-pubnub.herokuapp.com/current_account/my
 
 (login if required, the creds are the same as used in the below REST call)
 
-Leave this screen in your browser, then to create an update event for the balance of an account:
+Then, create an update event for the balance of an account:
 
 <pre>
+
 sivan@future:~/django-pubnub/django-pubnub$ curl --basic -u "test:957431cbfaa05551a59bb087ad4de5370a9e521c4c455b27ba6b06d5cf4068a3" -v -H "Content-type: application/json" -X PUT http://django-pubnub.herokuapp.com/api/v1/account/50d1a999da907a142711dea0/ -d '{"balance" : 2531.5}'
 * About to connect() to django-pubnub.herokuapp.com port 80 (#0)
 *   Trying 23.23.113.171... connected
